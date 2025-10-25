@@ -1,6 +1,6 @@
 Plataforma Edu
 
-Sistema de gerenciamento de alunos, turmas e matrículas, com autenticação completa de usuários. Desenvolvido com PHP no backend e Vue 3 no frontend.
+Plataforma de gerenciamento de alunos, turmas e matrículas, com autenticação completa de usuários. Desenvolvido com PHP no backend e Vue no frontend.
 
 
 ---
@@ -35,6 +35,13 @@ O projeto inclui um script de inicialização que configura todo o ambiente auto
 ```bash
 chmod +x autostart/init.sh
 ./autostart/init.sh
+```
+
+Apenas no caso de algum erro e o banco não popule, ou não seja criado, por favor utilizar:
+
+```bash
+docker exec -i edu-mysql mysql -u root -proot < database/dump.sql
+docker exec -i edu-mysql mysql -u root -proot edu_db < database/seeds/initial.sql
 ```
 
 O script realiza:
