@@ -1,6 +1,6 @@
 Plataforma Edu
 
-Sistema de gerenciamento de alunos, turmas e matrículas, com autenticação completa de usuários. Desenvolvido com PHP no backend e Vue 3 no frontend.
+Plataforma de gerenciamento de alunos, turmas e matrículas, com autenticação completa de usuários. Desenvolvido com PHP no backend e Vue no frontend.
 
 
 ---
