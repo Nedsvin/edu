@@ -1,0 +1,272 @@
+API Edu
+
+Descrição:
+Documentação da API da plataforma. Abaixo segue a lista de endpoints com método, rota e uma breve descrição bem simplificada do propósito de cada um.
+
+
+AUTH
+
+POST /login
+
+Login do administrador (autenticação).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+GET /me
+
+Retorna dados do usuário logado.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+ALUNOS-----------------------------------------------------------------------
+
+POST /alunos
+
+Criar novo aluno.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+GET /alunos
+
+Listar alunos.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /alunos/busca
+
+Buscar alunos por nome.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /alunos/{id}
+
+Buscar aluno por ID.
+
+Parâmetro: id (path) — identificador do aluno.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+PUT /alunos/{id}
+
+Atualizar aluno (por ID).
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+DELETE /alunos/{id}
+
+Remover aluno (por ID).
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+TURMAS-----------------------------------------------------------------------
+
+POST /turmas
+
+Criar nova turma.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /turmas
+
+Listar turmas.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /turmas/busca
+
+Buscar turmas por nome.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /turmas/{id}
+
+Buscar turma por ID.
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+PUT /turmas/{id}
+
+Atualizar turma (por ID).
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+DELETE /turmas/{id}
+
+Remover turma (por ID).
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+MATRÍCULAS-----------------------------------------------------------------------
+
+POST /matriculas
+
+Realizar matrícula de aluno (criar associação aluno ↔ turma).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+DELETE /matriculas
+
+Remover matrícula (exclui pelo corpo da requisição — body).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /matriculas/turma/{id}
+
+Listar alunos por turma (retorna matrículas/inscritos de uma turma).
+
+Parâmetro: id (path) — identificador da turma.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+USUÁRIOS-----------------------------------------------------------------------
+
+POST /usuarios
+
+Criar novo usuário (administrador).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /usuarios
+
+Listar usuários.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /usuarios/busca
+
+Buscar usuários por nome.
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+GET /usuarios/{id}
+
+Buscar usuário por ID.
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+PUT /usuarios/{id}
+
+Atualizar usuário (por ID).
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+DELETE /usuarios/{id}
+
+Remover usuário (por ID).
+
+Parâmetro: id (path).
+
+Resposta: 200 — Requisição bem-sucedida.
+______________________________________________
+
+
+
+TAGS / DESCRIÇÕES GERAIS-----------------------------------------------------------------------
+
+
+Auth
+
+Operações de autenticação (login, dados do usuário logado).
+
+Usuários
+
+Gerenciamento de usuários administradores.
+
+Alunos
+
+Gerenciamento de alunos (criar, listar, buscar, atualizar, remover).
+
+Turmas
+
+Gerenciamento de turmas (criar, listar, buscar, atualizar, remover).
+
+Matrículas
+
+Gerenciamento de matrículas (associar aluno ↔ turma, listar por turma, remover).
+
+NOTAS ÚTEIS
+
+Todas as rotas documentadas indicam resposta 200 para sucesso nas operações (conforme a especificação fornecida).
+
+Endpoints que recebem parâmetros via path têm o parâmetro indicado entre chaves, p.ex. {id}.
+
+A autenticação (login) deve retornar um token que o cliente utiliza para acessar rotas protegidas (ver rotas /me e demais endpoints que podem exigir autenticação).
+
+Para operações de DELETE que exigem dados no corpo (por exemplo /matriculas), verifique o formato esperado (student_id, class_id) na implementação da API.

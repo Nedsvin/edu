@@ -1,0 +1,15 @@
+FROM node:latest
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm cache clean --force
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 5173
+
+CMD ["npm", "run", "dev"]
