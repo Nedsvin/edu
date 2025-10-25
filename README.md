@@ -37,6 +37,13 @@ chmod +x autostart/init.sh
 ./autostart/init.sh
 ```
 
+Apenas no caso de algum erro e o banco não popule, ou não seja criado, por favor utilizar:
+
+```bash
+docker exec -i edu-mysql mysql -u root -proot < database/dump.sql
+docker exec -i edu-mysql mysql -u root -proot edu_db < database/seeds/initial.sql
+```
+
 O script realiza:
 
 Inicialização dos containers Docker, importação do banco de dados, seeders, configuração dos arquivos .env
