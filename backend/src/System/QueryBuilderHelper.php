@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\System;
 
 use PDO;
@@ -18,59 +20,76 @@ class QueryBuilderHelper
         ?string $sqlCount = null,
         ?string $groupBy = null
     ): array {
-        list($orderColumn, $flow) = explode(':', $ordem);
-        $flow = strtolower($flow) === 'desc' ? 'DESC' : 'ASC';
+        [$orderColumn, $flow] = array_pad(explode(':', $ordem, 2), 2, 'asc');
+        $flow = (strtolower($flow) === 'desc') ? 'DESC' : 'ASC';
 
-        $page = isset($params['page']) ? (int) $params['page'] : 1;
-        $itemsPerPage = isset($params['itemsPerPage']) ? (int) $params['itemsPerPage'] : 10;
-        $offset = ($page - 1) * $itemsPerPage;
+        if (!empty($allowedFields) && !in_array($orderColumn, $allowedFields, true)) {
+            $orderColumn = 'id';
+        }
+        if (!preg_match('/^[A-Za-z0-9_]+$/', $orderColumn)) {
+            $orderColumn = 'id';
+        }
 
-        $where = '';
+        $page = isset($params['page']) ? (int)$params['page'] : 1;
+        $itemsPerPage = isset($params['itemsPerPage']) ? (int)$params['itemsPerPage'] : 10;
+        $offset = max(0, ($page - 1) * $itemsPerPage);
+
+        $conditions = [];
         $binds = [];
 
         foreach ($params as $key => $value) {
-            if (in_array($key, $allowedFields) && $value !== null) {
-                $param = ":{$key}";
-                $binds[$param] = $key === 'name' ? "%{$value}%" : $value;
-                $where .= $key === 'name'
-                    ? " AND {$alias}.{$key} LIKE {$param}"
-                    : " AND {$alias}.{$key} = {$param}";
+            if (!in_array($key, $allowedFields, true) || $value === null) {
+                continue;
+            }
+
+            $param = ':p_' . $key;
+
+            if ($key === 'name') {
+                $conditions[] = "{$alias}.{$key} LIKE {$param}";
+                $binds[$param] = "%{$value}%";
+            } else {
+                $conditions[] = "{$alias}.{$key} = {$param}";
+                $binds[$param] = $value;
             }
         }
 
-        $whereClause = $where ? ' WHERE ' . substr($where, 5) : '';
+        $whereClause = $conditions ? ' WHERE ' . implode(' AND ', $conditions) : '';
         $groupClause = $groupBy ? " GROUP BY {$groupBy}" : '';
 
-        $sql = "$sqlBase {$whereClause} {$groupClause} ORDER BY {$alias}.{$orderColumn} {$flow} LIMIT :limit OFFSET :offset";
+        $sql = "{$sqlBase} {$whereClause} {$groupClause} ORDER BY {$alias}.{$orderColumn} {$flow} LIMIT :limit OFFSET :offset";
         $stmt = $pdo->prepare($sql);
 
-        foreach ($binds as $key => $value) {
-            $stmt->bindValue($key, $value);
+        foreach ($binds as $param => $value) {
+            $stmt->bindValue($param, $value, PDO::PARAM_STR);
         }
         $stmt->bindValue(':limit', $itemsPerPage, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
 
+        $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         if ($map) {
             $data = array_map($map, $data);
         }
 
         if ($sqlCount) {
-            $stmtCount = $pdo->prepare($sqlCount . ' ' . $whereClause);
+            $countSql = $sqlCount . ' ' . $whereClause;
         } else {
-            $stmtCount = $pdo->prepare("SELECT COUNT(*) as total FROM ({$sqlBase} {$whereClause}) as sub");
+            $countSql = "SELECT COUNT(*) as total FROM ({$sqlBase} {$whereClause}) as sub";
         }
 
-        foreach ($binds as $key => $value) {
-            $stmtCount->bindValue($key, $value);
+        $stmtCount = $pdo->prepare($countSql);
+        foreach ($binds as $param => $value) {
+            $stmtCount->bindValue($param, $value, PDO::PARAM_STR);
         }
         $stmtCount->execute();
-        $total = $stmtCount->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+        $totalRow = $stmtCount->fetch(PDO::FETCH_ASSOC);
+        $total = isset($totalRow['total']) ? (int)$totalRow['total'] : 0;
 
         return [
             'data' => $data,
-            'total' => (int) $total,
+            'total' => $total,
         ];
     }
 }

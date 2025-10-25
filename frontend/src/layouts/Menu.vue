@@ -15,6 +15,7 @@
     ]" aria-hidden="!isOpen">
       <nav class="flex-1 px-4 pt-[50px]">
         <ul class="space-y-1">
+
           <li>
             <router-link to="/home"
               class="flex items-center gap-3 px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-200 hover:scale-105"
@@ -27,6 +28,7 @@
               <span class="text-sm font-medium text-gray-700">Página Inicial</span>
             </router-link>
           </li>
+
           <li>
             <router-link to="/usuarios"
               class="flex items-center gap-3 px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-200 hover:scale-105 transition transform"
@@ -39,6 +41,7 @@
               <span class="text-sm font-medium text-gray-700">Administradores</span>
             </router-link>
           </li>
+
           <li>
             <router-link to="/alunos"
               class="flex items-center gap-3 px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-200 hover:scale-105 transition transform"
@@ -51,6 +54,7 @@
               <span class="text-sm font-medium text-gray-700">Alunos</span>
             </router-link>
           </li>
+
           <li>
             <router-link to="/matriculas"
               class="flex items-center gap-3 px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-200 hover:scale-105 transition transform"
@@ -63,6 +67,7 @@
               <span class="text-sm font-medium text-gray-700">Matrículas</span>
             </router-link>
           </li>
+
           <li>
             <router-link to="/turmas"
               class="flex items-center gap-3 px-3 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-200 hover:scale-105 transition transform"
@@ -75,6 +80,7 @@
               <span class="text-sm font-medium text-gray-700">Turmas</span>
             </router-link>
           </li>
+
           <li class="mt-4">
             <router-link to="/logout"
               class="flex items-center gap-3 px-3 py-3 rounded-lg text-red-600 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-100">
@@ -83,6 +89,7 @@
               <span class="text-sm font-medium text-red-600">Sair</span>
             </router-link>
           </li>
+
         </ul>
       </nav>
     </aside>

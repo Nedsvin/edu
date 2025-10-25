@@ -10,7 +10,6 @@
           <Select id="turma" label="Turma" :options="classes" v-model="form.class_id" :error-message="errors?.class_id"
             :required="true" />
         </div>
-
         <div>
           <Button type="primary" @click="handleFormSubmit" :is-loading="isLoading" class="w-full">
             Salvar
@@ -84,7 +83,6 @@ const handleFormSubmit = async () => {
 
     isLoading.value = false
   }
-
 }
 
 const fetchOptions = async () => {
