@@ -32,7 +32,7 @@ class Validator
         }
 
         if (!$student->getBirth() || !strtotime($student->getBirth()) || !DateHelper::birthDateNow($student->getBirth())) {
-            throw new InvalidStudentException('Data de nascimento inválida.');
+            throw new InvalidStudentException('Data de nascimento inválida ou idade menor que 17.');
         }
 
     }
