@@ -78,11 +78,11 @@ Fiz meu back pensando na estrutura de um framework, porém, em PHP puro
 Usado como inspiração pontos como
 
 Domain-Driven Design (DDD)
-SOLID
-MVC
-Exception Handling
-Routing
-Validation Layer
+, SOLID
+, MVC
+, Exception Handling
+, Routing
+e Validation Layer
 
 Criei funções para o tratamento de rotas, bem como arquivos de Exceptions principais e secundários. Implementei validações abrangentes para garantir a integridade dos dados e o bom funcionamento do sistema.
 
